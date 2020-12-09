@@ -1,4 +1,4 @@
-package com.example.equipmentrestrictor;
+package com.equipmentrestrictor;
 
 import net.runelite.client.config.Config;
 import net.runelite.client.config.ConfigGroup;

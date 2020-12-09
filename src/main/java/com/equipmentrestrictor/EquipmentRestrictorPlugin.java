@@ -1,4 +1,4 @@
-package com.example.equipmentrestrictor;
+package com.equipmentrestrictor;
 
 import com.google.inject.Provides;
 import javax.inject.Inject;
@@ -11,6 +11,7 @@ import java.util.HashMap;
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
 import net.runelite.api.events.MenuOptionClicked;
+import net.runelite.api.EquipmentInventorySlot;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
@@ -19,7 +20,6 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.util.Text;
 import net.runelite.client.util.WildcardMatcher;
-import net.runelite.api.EquipmentInventorySlot;
 import net.runelite.http.api.item.ItemEquipmentStats;
 
 @Slf4j
@@ -59,7 +59,7 @@ public class EquipmentRestrictorPlugin extends Plugin
 
 	private List<String> whitelistItems;
 	private List<String> blacklistItems;
-	private Map<Integer,Boolean> slotLocks;
+	private Map<Integer, Boolean> slotLocks;
 
 	@Subscribe
 	public void onMenuOptionClicked(MenuOptionClicked event)
@@ -113,7 +113,8 @@ public class EquipmentRestrictorPlugin extends Plugin
 	{
 		if (event.getGroup().equals(CONFIG_GROUP))
 		{
-			switch (event.getKey()) {
+			switch (event.getKey())
+			{
 				case WHITELIST:
 					whitelistItems = Text.fromCSV(config.getWhitelist());
 					break;
