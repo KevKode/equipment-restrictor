@@ -1,6 +1,7 @@
 package com.equipmentrestrictor;
 
 import com.google.inject.Provides;
+import java.util.Objects;
 import javax.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
 
@@ -68,15 +69,22 @@ public class EquipmentRestrictorPlugin extends Plugin
 
 		if (menuOption.equals(WIELD) || menuOption.equals(WEAR))
 		{
-			final String itemName = itemManager.getItemComposition(event.getId()).getName();
-			final ItemEquipmentStats itemEquipmentStats = itemManager.getItemStats(event.getId(), true).getEquipment();
-			final int itemSlot = itemEquipmentStats.getSlot();
-			final boolean itemIsTwoHanded = itemEquipmentStats.isTwoHanded();
-
-			if (!canPlayerEquipItem(itemName, itemSlot, itemIsTwoHanded))
+			try
 			{
-				client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "You can't \"" + menuOption + "\" restricted item \"" + itemName + "\"", null);
-				event.consume();
+				final String itemName = itemManager.getItemComposition(event.getId()).getName();
+				final ItemEquipmentStats itemEquipmentStats = Objects.requireNonNull(itemManager.getItemStats(event.getId(), true)).getEquipment();
+				final int itemSlot = itemEquipmentStats.getSlot();
+				final boolean itemIsTwoHanded = itemEquipmentStats.isTwoHanded();
+
+				if (!canPlayerEquipItem(itemName, itemSlot, itemIsTwoHanded))
+				{
+					client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "You can't \"" + menuOption + "\" restricted item \"" + itemName + "\"", null);
+					event.consume();
+				}
+			}
+			catch (NullPointerException ex)
+			{
+				log.warn("unable to get item's equipment stats", ex);
 			}
 		}
 	}
