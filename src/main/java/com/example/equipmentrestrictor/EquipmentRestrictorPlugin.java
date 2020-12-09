@@ -4,9 +4,9 @@ import com.google.inject.Provides;
 import javax.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Dictionary;
-import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
@@ -20,6 +20,7 @@ import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.util.Text;
 import net.runelite.client.util.WildcardMatcher;
 import net.runelite.api.EquipmentInventorySlot;
+import net.runelite.http.api.item.ItemEquipmentStats;
 
 @Slf4j
 @PluginDescriptor(
@@ -58,7 +59,7 @@ public class EquipmentRestrictorPlugin extends Plugin
 
 	private List<String> whitelistItems;
 	private List<String> blacklistItems;
-	private Hashtable<Integer,Boolean> slotLocks;
+	private Map<Integer,Boolean> slotLocks;
 
 	@Subscribe
 	public void onMenuOptionClicked(MenuOptionClicked event)
@@ -68,8 +69,9 @@ public class EquipmentRestrictorPlugin extends Plugin
 		if (menuOption.equals(WIELD) || menuOption.equals(WEAR))
 		{
 			final String itemName = itemManager.getItemComposition(event.getId()).getName();
-			final int itemSlot = itemManager.getItemStats(event.getId(), true).getEquipment().getSlot();
-			final boolean itemIsTwoHanded = itemManager.getItemStats(event.getId(), true).getEquipment().isTwoHanded();
+			final ItemEquipmentStats itemEquipmentStats = itemManager.getItemStats(event.getId(), true).getEquipment();
+			final int itemSlot = itemEquipmentStats.getSlot();
+			final boolean itemIsTwoHanded = itemEquipmentStats.isTwoHanded();
 
 			if (!canPlayerEquipItem(itemName, itemSlot, itemIsTwoHanded))
 			{
@@ -162,7 +164,7 @@ public class EquipmentRestrictorPlugin extends Plugin
 		whitelistItems = Text.fromCSV(config.getWhitelist());
 		blacklistItems = Text.fromCSV(config.getBlacklist());
 
-		slotLocks = new Hashtable<>();
+		slotLocks = new HashMap<>();
 		slotLocks.put(EquipmentInventorySlot.HEAD.getSlotIdx(), config.getHeadSlotLock());
 		slotLocks.put(EquipmentInventorySlot.CAPE.getSlotIdx(), config.getCapeSlotLock());
 		slotLocks.put(EquipmentInventorySlot.AMULET.getSlotIdx(), config.getNeckSlotLock());
