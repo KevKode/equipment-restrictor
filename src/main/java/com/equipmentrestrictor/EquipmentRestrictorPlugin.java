@@ -1,13 +1,13 @@
 package com.equipmentrestrictor;
 
 import com.google.inject.Provides;
-import java.util.Objects;
 import javax.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Objects;
 
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
@@ -162,7 +162,6 @@ public class EquipmentRestrictorPlugin extends Plugin
 				case AMMO_SLOT:
 					slotLocks.put(EquipmentInventorySlot.AMMO.getSlotIdx(), config.getAmmoSlotLock());
 					break;
-
 			}
 		}
 	}
