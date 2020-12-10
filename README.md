@@ -32,7 +32,7 @@ Check a weapon type to lock it, blocking weapons of that type from being equippe
 
 Salamander-Only, Monkman, and 2h-Only with a few 1h exceptions.
 
-![SalamanderOnly](https://i.imgur.com/FicMJOv.png) ![Monkman](https://i.imgur.com/diZDvZE.png) ![2hOnly](https://i.imgur.com/J5om5MR.png)
+![SalamanderOnly](https://i.imgur.com/FicMJOv.png) ![Monkman](https://i.imgur.com/nGwgrrY.png) ![2hOnly](https://i.imgur.com/J5om5MR.png)
 
 ## Issues
 
