@@ -16,7 +16,7 @@ public interface EquipmentRestrictorConfig extends Config
 	)
 	default String getWhitelist()
 	{
-		return "Shortbow";
+		return "";
 	}
 
 	@ConfigItem(
@@ -27,12 +27,12 @@ public interface EquipmentRestrictorConfig extends Config
 	)
 	default String getBlacklist()
 	{
-		return "Bronze pickaxe";
+		return "";
 	}
 
 	@ConfigSection(
 		name = "Equipment Slot Locks",
-		description = "Locks an equipment slot, preventing items from being equipped there (✓ = locked)",
+		description = "Locks an equipment slot, blocking items from being equipped there (✓ = locked)",
 		position = 3,
 		closedByDefault = true
 	)
@@ -172,7 +172,7 @@ public interface EquipmentRestrictorConfig extends Config
 
 	@ConfigSection(
 		name = "Weapon Type Locks",
-		description = "Locks a equipment type, preventing weapons of that type from being equipped (✓ = locked)",
+		description = "Locks a weapon type, blocking weapons of that type from being equipped (✓ = locked)",
 		position = 4,
 		closedByDefault = true
 	)
