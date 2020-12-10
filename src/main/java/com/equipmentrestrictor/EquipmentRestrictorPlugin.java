@@ -78,7 +78,7 @@ public class EquipmentRestrictorPlugin extends Plugin
 
 				if (!canPlayerEquipItem(itemName, itemSlot, itemIsTwoHanded))
 				{
-					client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "You can't \"" + menuOption + "\" restricted item \"" + itemName + "\"", null);
+					client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "You can't \"" + menuOption + "\" restricted item \"" + itemName + "\".", null);
 					event.consume();
 				}
 			}
