@@ -1,4 +1,4 @@
-# Equipment Restrictor 
+# <img align="center" src="https://i.imgur.com/uw1mSGR.png" alt="Icon"> Equipment Restrictor 
 
 Mainly made for Snowflake Ironmen, this plugin allows you to restrict the kinds of equipment your character can use. When clicking on an item that is blocked, you will receive a game message as shown below.
 
