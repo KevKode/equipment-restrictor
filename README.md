@@ -38,6 +38,15 @@ Salamander-Only, Monkman, and 2h-Only with a few 1h exceptions.
 
 No issues are known, _yet_. If you find one, feel free to create a GitHub Issue in the tab above or contact me on Discord at `Knetty#7451`.
 
+## Planned Features
+
+ - Tinting locked slots red in the equipment panel.
+ - Allowing players to restrict by item stats like prayer bonus.
+ - Special ironman symbols next to name.
+ - Import/Export setups.
+ - Swapping blocked item's menu entry.
+ - Showing blocked status on hover.
+
 ## Changelog
 
 ### v1.0
