@@ -25,7 +25,9 @@ import net.runelite.http.api.item.ItemEquipmentStats;
 
 @Slf4j
 @PluginDescriptor(
-	name = "Equipment Restrictor"
+	name = "Equipment Restrictor",
+	description = "Restrict the items the player can equip",
+	tags = {"equipment", "items", "gear", "weapon", "offhand", "armor", "armour", "restrict", "ironman"}
 )
 public class EquipmentRestrictorPlugin extends Plugin
 {

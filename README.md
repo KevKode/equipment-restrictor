@@ -36,7 +36,9 @@ Salamander-Only, Monkman, and 2h-Only with a few 1h exceptions.
 
 ## Issues
 
-No issues are known, _yet_. If you find one, feel free to create a GitHub Issue in the tab above or contact me on Discord at `Knetty#7451`.
+ - **Newer items are not effected**: RuneLite gets equipment stats by scraping the Wiki's API weekly, the item will be able to be restricted after that. The Item Stats plugin uses the same data, so if you don't see the item's stats on hover, you probably won't be able to restrict the item.
+
+If you find an issue, feel free to create a GitHub Issue in the tab above or contact me on Discord at `Knetty#7451`.
 
 ## Planned Features
 
