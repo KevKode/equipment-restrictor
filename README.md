@@ -51,5 +51,5 @@ If you find an issue, feel free to create a GitHub Issue in the tab above or con
 
 ## Changelog
 
-### v1.0
+### v1.0 [`da39382`](https://github.com/KevKode/equipment-restrictor/tree/da39382cceba7619c8ff3c04fb222d75b1290388)
  - Initial write of the plugin.
