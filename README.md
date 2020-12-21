@@ -36,7 +36,7 @@ Salamander-Only, Monkman, and 2h-Only with a few 1h exceptions.
 
 ## Issues
 
- - **Newer items are not effected**: RuneLite gets equipment stats by scraping the Wiki's API weekly, the item will be able to be restricted after that. The Item Stats plugin uses the same data, so if you don't see the item's stats on hover, you probably won't be able to restrict the item.
+ - **Newer items are not affected**: RuneLite gets the equipment stats of new items by scraping the Wiki's API weekly, they will be able to be restricted after that. The Item Stats plugin uses the same data, so if you don't see the item's stats on hover, you probably won't be able to restrict the item.
 
 If you find an issue, feel free to create a GitHub Issue in the tab above or contact me on Discord at `Knetty#7451`.
 
@@ -50,6 +50,10 @@ If you find an issue, feel free to create a GitHub Issue in the tab above or con
  - Showing blocked status on hover.
 
 ## Changelog
+
+### v1.0.1 [`aecb612`](https://github.com/KevKode/equipment-restrictor/tree/aecb6123b4af005d7fe95f805780db511c313182)
+ - Updated message formatting to bring it in line with all other Runelite plugins, thanks to [`Arrafrost`](https://github.com/arrafrost) for this change. 
+ ![GameMessage](https://i.imgur.com/vgKY2hZ.png)
 
 ### v1.0 [`da39382`](https://github.com/KevKode/equipment-restrictor/tree/da39382cceba7619c8ff3c04fb222d75b1290388)
  - Initial write of the plugin.
