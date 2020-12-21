@@ -52,7 +52,7 @@ If you find an issue, feel free to create a GitHub Issue in the tab above or con
 ## Changelog
 
 ### v1.0.1 [`aecb612`](https://github.com/KevKode/equipment-restrictor/tree/aecb6123b4af005d7fe95f805780db511c313182)
- - Updated message formatting to bring it in line with all other Runelite plugins, thanks to [`Arrafrost`](https://github.com/arrafrost) for this change. 
+ - Updated message formatting to bring it in line with all other plugins, thanks to [`Arrafrost`](https://github.com/arrafrost) for this change. 
  
  ![GameMessage](https://i.imgur.com/vgKY2hZ.png)
 
