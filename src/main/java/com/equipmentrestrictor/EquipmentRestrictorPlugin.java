@@ -59,6 +59,8 @@ public class EquipmentRestrictorPlugin extends Plugin
 
 	private static final String WIELD = "Wield";
 	private static final String WEAR = "Wear";
+	private static final String EQUIP = "Equip";
+
 
 	private List<String> whitelistItems;
 	private List<String> blacklistItems;
@@ -69,7 +71,7 @@ public class EquipmentRestrictorPlugin extends Plugin
 	{
 		final String menuOption = event.getMenuOption();
 
-		if (menuOption.equals(WIELD) || menuOption.equals(WEAR))
+		if (menuOption.equals(WIELD) || menuOption.equals(WEAR) || menuOption.equals(EQUIP))
 		{
 			try
 			{
