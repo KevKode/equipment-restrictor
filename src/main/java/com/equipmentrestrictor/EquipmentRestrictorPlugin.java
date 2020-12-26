@@ -61,7 +61,6 @@ public class EquipmentRestrictorPlugin extends Plugin
 	private static final String WEAR = "Wear";
 	private static final String EQUIP = "Equip";
 
-
 	private List<String> whitelistItems;
 	private List<String> blacklistItems;
 	private Map<Integer, Boolean> slotLocks;

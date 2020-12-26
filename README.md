@@ -51,7 +51,8 @@ If you find an issue, feel free to create a GitHub Issue in the tab above or con
 
 ## Changelog
 
-### v1.0.1 [`aecb612`](https://github.com/KevKode/equipment-restrictor/tree/aecb6123b4af005d7fe95f805780db511c313182)
+### v1.0.1 [`0c5aea8`](https://github.com/KevKode/equipment-restrictor/tree/0c5aea8de7cf3dc92ebedcaf18321bf500276a75)
+ - Fixed a bug where items with the "Equip" menu option were not being checked (ex. Cattleprod)
  - Updated message formatting to bring it in line with all other plugins, thanks to [`Arrafrost`](https://github.com/arrafrost) for this change. 
  
  ![GameMessage](https://i.imgur.com/vgKY2hZ.png)
