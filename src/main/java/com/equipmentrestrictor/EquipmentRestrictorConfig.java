@@ -33,8 +33,7 @@ public interface EquipmentRestrictorConfig extends Config
 	@ConfigSection(
 		name = "Equipment Slot Locks",
 		description = "Locks an equipment slot, blocking items from being equipped there (✓ = locked)",
-		position = 3,
-		closedByDefault = true
+		position = 3
 	)
 	String equipmentSlotLocks = "equipmentSlotLocks";
 
@@ -173,8 +172,7 @@ public interface EquipmentRestrictorConfig extends Config
 	@ConfigSection(
 		name = "Weapon Type Locks",
 		description = "Locks a weapon type, blocking weapons of that type from being equipped (✓ = locked)",
-		position = 4,
-		closedByDefault = true
+		position = 4
 	)
 	String weaponTypeSlotLocks = "weaponTypeSlotLocks";
 
