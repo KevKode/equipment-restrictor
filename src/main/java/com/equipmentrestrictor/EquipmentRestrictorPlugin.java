@@ -7,12 +7,15 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
-import java.util.Objects;
+import java.util.LinkedList;
 
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
 import net.runelite.api.events.MenuOptionClicked;
 import net.runelite.api.EquipmentInventorySlot;
+import net.runelite.api.widgets.Widget;
+import net.runelite.api.widgets.WidgetInfo;
+import net.runelite.api.widgets.WidgetItem;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
@@ -22,6 +25,7 @@ import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.util.Text;
 import net.runelite.client.util.WildcardMatcher;
 import net.runelite.http.api.item.ItemEquipmentStats;
+import net.runelite.http.api.item.ItemStats;
 
 @Slf4j
 @PluginDescriptor(
@@ -68,27 +72,90 @@ public class EquipmentRestrictorPlugin extends Plugin
 	@Subscribe
 	public void onMenuOptionClicked(MenuOptionClicked event)
 	{
-		final String menuOption = event.getMenuOption();
-
-		if (menuOption.equals(WIELD) || menuOption.equals(WEAR) || menuOption.equals(EQUIP))
+		String menuOption = event.getMenuOption();
+		if (!menuOption.equals(WIELD) && !menuOption.equals(WEAR) && !menuOption.equals(EQUIP))
 		{
-			try
-			{
-				final String itemName = itemManager.getItemComposition(event.getId()).getName();
-				final ItemEquipmentStats itemEquipmentStats = Objects.requireNonNull(itemManager.getItemStats(event.getId(), true)).getEquipment();
-				final int itemSlot = itemEquipmentStats.getSlot();
-				final boolean itemIsTwoHanded = itemEquipmentStats.isTwoHanded();
+			return;
+		}
 
-				if (!canPlayerEquipItem(itemName, itemSlot, itemIsTwoHanded))
-				{
-					client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "You can't " + menuOption.toLowerCase() + " restricted item: <col=ff00000>" + itemName + "</col>", null);
-					event.consume();
-				}
-			}
-			catch (NullPointerException ex)
-			{
-				log.warn("unable to get item's equipment stats", ex);
-			}
+		Integer itemId = findItemIdFromWidget(event.getWidgetId(), event.getActionParam());
+		if (itemId == null)
+		{
+			return;
+		}
+
+		ItemStats itemStats = itemManager.getItemStats(itemId, true);
+		if (itemStats == null || !itemStats.isEquipable())
+		{
+			return;
+		}
+
+		ItemEquipmentStats itemEquipmentStats = itemStats.getEquipment();
+		if (itemEquipmentStats == null)
+		{
+			return;
+		}
+
+		String itemName = itemManager.getItemComposition(itemId).getName();
+		int itemSlot = itemEquipmentStats.getSlot();
+		boolean itemIsTwoHanded = itemEquipmentStats.isTwoHanded();
+
+		if (!canPlayerEquipItem(itemName, itemSlot, itemIsTwoHanded))
+		{
+			client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "You can't " + menuOption.toLowerCase() + " restricted item: <col=ff00000>" + itemName + "</col>", null);
+			event.consume();
+		}
+	}
+
+	@Subscribe
+	public void onConfigChanged(ConfigChanged event)
+	{
+		if (!event.getGroup().equals(CONFIG_GROUP))
+		{
+			return;
+		}
+
+		switch (event.getKey())
+		{
+			case WHITELIST:
+				whitelistItems = new LinkedList<>(Text.fromCSV(config.getWhitelist()));
+				break;
+			case BLACKLIST:
+				blacklistItems = new LinkedList<>(Text.fromCSV(config.getBlacklist()));
+				break;
+			case HEAD_SLOT:
+				slotLocks.put(EquipmentInventorySlot.HEAD.getSlotIdx(), config.getHeadSlotLock());
+				break;
+			case CAPE_SLOT:
+				slotLocks.put(EquipmentInventorySlot.CAPE.getSlotIdx(), config.getCapeSlotLock());
+				break;
+			case NECK_SLOT:
+				slotLocks.put(EquipmentInventorySlot.AMULET.getSlotIdx(), config.getNeckSlotLock());
+				break;
+			case WEAPON_SLOT:
+				slotLocks.put(EquipmentInventorySlot.WEAPON.getSlotIdx(), config.getWeaponSlotLock());
+				break;
+			case BODY_SLOT:
+				slotLocks.put(EquipmentInventorySlot.BODY.getSlotIdx(), config.getBodySlotLock());
+				break;
+			case SHIELD_SLOT:
+				slotLocks.put(EquipmentInventorySlot.SHIELD.getSlotIdx(), config.getShieldSlotLock());
+				break;
+			case LEG_SLOT:
+				slotLocks.put(EquipmentInventorySlot.LEGS.getSlotIdx(), config.getLegSlotLock());
+				break;
+			case HAND_SLOT:
+				slotLocks.put(EquipmentInventorySlot.GLOVES.getSlotIdx(), config.getHandSlotLock());
+				break;
+			case FEET_SLOT:
+				slotLocks.put(EquipmentInventorySlot.BOOTS.getSlotIdx(), config.getFeetSlotLock());
+				break;
+			case RING_SLOT:
+				slotLocks.put(EquipmentInventorySlot.RING.getSlotIdx(), config.getRingSlotLock());
+				break;
+			case AMMO_SLOT:
+				slotLocks.put(EquipmentInventorySlot.AMMO.getSlotIdx(), config.getAmmoSlotLock());
+				break;
 		}
 	}
 
@@ -96,9 +163,9 @@ public class EquipmentRestrictorPlugin extends Plugin
 	{
 		// The player can equip the item if...
 		return (
-			itemInList(itemName, whitelistItems)                             // the item is in the whitelist.
+			isItemInList(itemName, whitelistItems)                           // the item is in the whitelist.
 			|| (                                                             // 	(only proceed if the item isn't in the whitelist, it overrides everything)
-				!itemInList(itemName, blacklistItems)                        // the item is not in the black list...
+				!isItemInList(itemName, blacklistItems)                      // the item is not in the black list...
 				&&                                                           // 	and... (proceed to check if the item's slot is locked)
 				!slotLocks.get(itemSlot)                                     // the items slot is not locked...
 				&& (                                                         // 	and... (proceed to check if the item is a weapon, and if it's type is locked)
@@ -114,66 +181,47 @@ public class EquipmentRestrictorPlugin extends Plugin
 		);
 	}
 
-	private boolean itemInList(String itemName, List<String> itemList)
+	private boolean isItemInList(String itemName, List<String> itemList)
 	{
 		return itemList.stream().anyMatch(listItemName -> WildcardMatcher.matches(listItemName, itemName));
 	}
 
-	@Subscribe
-	public void onConfigChanged(ConfigChanged event)
+	private Integer findItemIdFromWidget(int widgetId, int actionParam)
 	{
-		if (event.getGroup().equals(CONFIG_GROUP))
+		int widgetGroup = WidgetInfo.TO_GROUP(widgetId);
+		int widgetChild = WidgetInfo.TO_CHILD(widgetId);
+		Widget widget = client.getWidget(widgetGroup, widgetChild);
+
+		if (widget == null)
 		{
-			switch (event.getKey())
+			return null;
+		}
+
+		if (widgetGroup == WidgetInfo.INVENTORY.getGroupId())
+		{
+			WidgetItem widgetItem = widget.getWidgetItem(actionParam);
+			if (widgetItem != null)
 			{
-				case WHITELIST:
-					whitelistItems = Text.fromCSV(config.getWhitelist());
-					break;
-				case BLACKLIST:
-					blacklistItems = Text.fromCSV(config.getBlacklist());
-					break;
-				case HEAD_SLOT:
-					slotLocks.put(EquipmentInventorySlot.HEAD.getSlotIdx(), config.getHeadSlotLock());
-					break;
-				case CAPE_SLOT:
-					slotLocks.put(EquipmentInventorySlot.CAPE.getSlotIdx(), config.getCapeSlotLock());
-					break;
-				case NECK_SLOT:
-					slotLocks.put(EquipmentInventorySlot.AMULET.getSlotIdx(), config.getNeckSlotLock());
-					break;
-				case WEAPON_SLOT:
-					slotLocks.put(EquipmentInventorySlot.WEAPON.getSlotIdx(), config.getWeaponSlotLock());
-					break;
-				case BODY_SLOT:
-					slotLocks.put(EquipmentInventorySlot.BODY.getSlotIdx(), config.getBodySlotLock());
-					break;
-				case SHIELD_SLOT:
-					slotLocks.put(EquipmentInventorySlot.SHIELD.getSlotIdx(), config.getShieldSlotLock());
-					break;
-				case LEG_SLOT:
-					slotLocks.put(EquipmentInventorySlot.LEGS.getSlotIdx(), config.getLegSlotLock());
-					break;
-				case HAND_SLOT:
-					slotLocks.put(EquipmentInventorySlot.GLOVES.getSlotIdx(), config.getHandSlotLock());
-					break;
-				case FEET_SLOT:
-					slotLocks.put(EquipmentInventorySlot.BOOTS.getSlotIdx(), config.getFeetSlotLock());
-					break;
-				case RING_SLOT:
-					slotLocks.put(EquipmentInventorySlot.RING.getSlotIdx(), config.getRingSlotLock());
-					break;
-				case AMMO_SLOT:
-					slotLocks.put(EquipmentInventorySlot.AMMO.getSlotIdx(), config.getAmmoSlotLock());
-					break;
+				return widgetItem.getId();
 			}
 		}
+		else if (widgetGroup == WidgetInfo.BANK_INVENTORY_ITEMS_CONTAINER.getGroupId())
+		{
+			Widget widgetItem = widget.getChild(actionParam);
+			if (widgetItem != null)
+			{
+				return widgetItem.getItemId();
+			}
+		}
+
+		return null;
 	}
 
 	@Override
 	protected void startUp() throws Exception
 	{
-		whitelistItems = Text.fromCSV(config.getWhitelist());
-		blacklistItems = Text.fromCSV(config.getBlacklist());
+		whitelistItems = new LinkedList<>(Text.fromCSV(config.getWhitelist()));
+		blacklistItems = new LinkedList<>(Text.fromCSV(config.getBlacklist()));
 
 		slotLocks = new HashMap<>();
 		slotLocks.put(EquipmentInventorySlot.HEAD.getSlotIdx(), config.getHeadSlotLock());
