@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Arrays;
 
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
@@ -61,9 +62,7 @@ public class EquipmentRestrictorPlugin extends Plugin
 	static final String ONE_HANDED = "oneHanded";
 	static final String TWO_HANDED = "twoHanded";
 
-	private static final String WIELD = "Wield";
-	private static final String WEAR = "Wear";
-	private static final String EQUIP = "Equip";
+	private static final List<String> EQUIP_MENU_OPTIONS = Arrays.asList("Wield", "Wear", "Equip", "Hold", "Ride", "Chill");
 
 	private List<String> whitelistItems;
 	private List<String> blacklistItems;
@@ -73,7 +72,7 @@ public class EquipmentRestrictorPlugin extends Plugin
 	public void onMenuOptionClicked(MenuOptionClicked event)
 	{
 		String menuOption = event.getMenuOption();
-		if (!menuOption.equals(WIELD) && !menuOption.equals(WEAR) && !menuOption.equals(EQUIP))
+		if (!EQUIP_MENU_OPTIONS.contains(menuOption))
 		{
 			return;
 		}
