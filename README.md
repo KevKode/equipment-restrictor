@@ -37,7 +37,7 @@ Salamander-Only, Monkman, and 2h-Only with a few 1h exceptions.
 ## Issues
 
  - **Newer items are not affected**: RuneLite gets the equipment stats of new items by scraping the Wiki's API weekly, they will be able to be restricted after that. The Item Stats plugin uses the same data, so if you don't see the item's stats on hover, you probably won't be able to restrict the item.
- - **Plugin doesn't work in special situations**: The plugin will not work for items that don't have to be clicked on in the Inventory/Bank to be equipped. Some examples are the Fox/Chicken/Grain from Recruitment Drive, the Anger Weapons from A Soul's Bane, and the Cormorant's Glove from Aerial Fishing and Hunter.
+ - **Plugin doesn't work in special situations**: The plugin will not work for items that don't have to be clicked on in the Inventory/Bank to be equipped. Some examples are the Fox/Chicken/Grain from Recruitment Drive and the Cormorant's Glove from Aerial Fishing and Hunter.
 
 If you find an issue, feel free to create a GitHub Issue in the tab above or contact me on Discord at `Knetty#7451`.
 
@@ -53,8 +53,9 @@ If you find an issue, feel free to create a GitHub Issue in the tab above or con
 
 ## Changelog
 
-### v1.0.2 [`6281a45`](https://github.com/KevKode/equipment-restrictor/tree/6281a450a0aa610bc1b91ca897c274e19f99fe7a)
+### v1.0.2 [`e73b29d`](https://github.com/KevKode/equipment-restrictor/tree/e73b29dc82f235965361e9c0b6ae32b26db0ab36)
  - Plugin now restricts items when equipping them from the Bank.
+ - Fixed a bug where items with the "Hold", "Ride", or "Chill" menu options were not being checked (ex. Gnomeball, Sleigh, Hand fan).
 
 ### v1.0.1 [`0c5aea8`](https://github.com/KevKode/equipment-restrictor/tree/0c5aea8de7cf3dc92ebedcaf18321bf500276a75)
  - Fixed a bug where items with the "Equip" menu option were not being checked (ex. Cattleprod).
