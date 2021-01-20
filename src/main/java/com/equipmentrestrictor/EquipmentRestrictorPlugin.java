@@ -204,7 +204,8 @@ public class EquipmentRestrictorPlugin extends Plugin
 				return widgetItem.getId();
 			}
 		}
-		else if (widgetGroup == WidgetInfo.BANK_INVENTORY_ITEMS_CONTAINER.getGroupId())
+		else if (widgetGroup == WidgetInfo.BANK_INVENTORY_ITEMS_CONTAINER.getGroupId()
+			|| widgetGroup == WidgetInfo.EQUIPMENT_INVENTORY_ITEMS_CONTAINER.getGroupId())
 		{
 			Widget widgetItem = widget.getChild(actionParam);
 			if (widgetItem != null)
