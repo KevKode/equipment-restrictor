@@ -53,6 +53,9 @@ If you find an issue, feel free to create a GitHub Issue in the tab above or con
 
 ## Changelog
 
+### v1.0.3 [`c8408c4`](https://github.com/KevKode/equipment-restrictor/tree/c8408c4d67100cd22f4bb2aca4d5625db840fc0c)
+ - Plugin now restricts items when equipping them with the Equipment interface open.
+
 ### v1.0.2 [`e73b29d`](https://github.com/KevKode/equipment-restrictor/tree/e73b29dc82f235965361e9c0b6ae32b26db0ab36)
  - Plugin now restricts items when equipping them from the Bank.
  - Fixed a bug where items with the "Hold", "Ride", or "Chill" menu options were not being checked (ex. Gnomeball, Sleigh, Hand fan).
